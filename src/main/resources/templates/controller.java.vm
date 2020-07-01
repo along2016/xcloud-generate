@@ -1,0 +1,127 @@
+package ${package.Controller};
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import com.f00lish.xcloud.common.base.result.ResultMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import java.util.List;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+#if(${restControllerStyle})
+#else
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Validated
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+@Api(tags = "$!{table.comment}接口")
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    /**
+     * 获取${table.comment}列表
+     */
+    @GetMapping(value = "/list")
+    @ApiOperation("${table.comment}列表")
+    public ResultMessage<Page<${entity}>> list(${entity} ${table.entityPath}) {
+        Page page = this.getPagination();
+        return ResultMessage.success(${table.entityPath}Service.selectPage(page,new EntityWrapper<>(${table.entityPath})));
+    }
+
+    /**
+    * 获取所有${table.comment}列表
+    */
+    @GetMapping(value = "/allList")
+    @ApiOperation("所有${table.comment}列表")
+    public ResultMessage<List<${entity}>> allList(${entity} ${table.entityPath}) {
+        return ResultMessage.success(${table.entityPath}Service.selectList(new EntityWrapper<>(${table.entityPath})));
+    }
+
+    /**
+     * 新增${table.comment}
+     */
+    @PostMapping(value = "/add")
+    @ApiOperation("新增${table.comment}")
+    public ResultMessage<${entity}> add(@RequestBody ${entity} ${table.entityPath}) {
+        boolean result = ${table.entityPath}Service.insert(${table.entityPath});
+        if (result)
+            return ResultMessage.success(${table.entityPath});
+        return ResultMessage.error();
+        }
+
+    /**
+     * 删除${table.comment}
+     */
+    @DeleteMapping(value = "/del")
+    @ApiOperation("删除${table.comment}")
+    public ResultMessage<String> delById(@RequestParam("id") Long id) {
+        boolean result = ${table.entityPath}Service.deleteById(id);
+        if (result)
+            return ResultMessage.success();
+        return ResultMessage.error();
+        }
+
+    /**
+     * "批量删除${table.comment}"
+     */
+    @ResponseBody
+    @DeleteMapping(value = "/delete")
+    @ApiOperation("批量删除${table.comment}")
+    public ResultMessage<Object> delByIds(String ids) {
+        return this.deleteBatchIds(ids, ${table.entityPath}Service);
+    }
+
+    /**
+     * 修改${table.comment}
+     */
+    @PostMapping(value = "/update")
+    @ApiOperation("修改${table.comment}")
+    public ResultMessage<String> update(@RequestBody ${entity} ${table.entityPath}) {
+        boolean result = ${table.entityPath}Service.updateById(${table.entityPath});
+        if (result)
+            return ResultMessage.success();
+        return ResultMessage.error();
+    }
+
+    /**
+     * 获取${table.comment}
+     */
+    @GetMapping(value = "/get")
+    @ApiOperation("查看${table.comment}")
+    public ResultMessage<${entity}> get(@RequestParam("id") Long id) {
+        return ResultMessage.success(${table.entityPath}Service.selectById(id));
+    }
+
+}
+
+#end
