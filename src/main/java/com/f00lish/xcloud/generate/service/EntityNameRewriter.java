@@ -2,8 +2,8 @@ package com.f00lish.xcloud.generate.service;
 
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.toolkit.StringUtils;
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
