@@ -1,6 +1,5 @@
 package com.f00lish.xcloud.generate.service;
 
-import com.baomidou.mybatisplus.mapper.SqlRunner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +23,6 @@ public class TableService {
      */
     public List<Map<String, Object>> getAllTables() {
         String sql = "select TABLE_NAME as tableName,TABLE_COMMENT as tableComment from information_schema.`TABLES` where TABLE_SCHEMA = '" + dbName + "'";
-        return SqlRunner.db().selectList(sql);
+        return null;
     }
 }
