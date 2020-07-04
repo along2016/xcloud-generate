@@ -1,5 +1,7 @@
 package com.f00lish.xcloud.generate.service;
 
+import com.f00lish.xcloud.generate.mapper.TablesMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,13 @@ public class TableService {
     @Value("${spring.datasource.db-name}")
     private String dbName;
 
+    @Autowired
+    private TablesMapper tablesMapper;
+
     /**
      * 获取当前数据库所有的表信息
      */
     public List<Map<String, Object>> getAllTables() {
-        String sql = "select TABLE_NAME as tableName,TABLE_COMMENT as tableComment from information_schema.`TABLES` where TABLE_SCHEMA = '" + dbName + "'";
-        return null;
+        return tablesMapper.getAllTables(dbName);
     }
 }
