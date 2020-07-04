@@ -82,10 +82,6 @@ public class GenerateService {
         strategyConfig.setSuperServiceClass("com.f00lish.xcloud.common.base.service.SuperService");
         // 自定义 service 实现类父类
         strategyConfig.setSuperServiceImplClass("com.f00lish.xcloud.common.base.service.impl.SuperServiceImpl");
-        // 自定义 controller 父类
-        strategyConfig.setSuperControllerClass("com.f00lish.xcloud.common.base.controller.BaseController");
-        strategyConfig.setSuperEntityClass("com.f00lish.xcloud.common.base.entity.DataEntity");
-        strategyConfig.setSuperMapperClass("com.f00lish.xcloud.common.base.mapper.SuperMapper");
         strategyConfig.setEntityLombokModel(true);
         strategyConfig.setRestControllerStyle(true);
         strategyConfig.setEntityBuilderModel(true);

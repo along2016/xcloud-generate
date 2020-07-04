@@ -1,8 +1,7 @@
 package com.f00lish.xcloud.generate.controller;
 
-import com.f00lish.xcloud.common.base.controller.BaseController;
-import com.f00lish.xcloud.common.base.result.ResultMessage;
 import com.f00lish.xcloud.generate.properties.DevtoolsProperties;
+import com.f00lish.xcloud.generate.result.ResultMessage;
 import com.f00lish.xcloud.generate.service.GenerateService;
 import com.f00lish.xcloud.generate.service.TableService;
 import com.f00lish.xcloud.generate.task.GenerateTask;
@@ -25,7 +24,7 @@ import java.util.HashMap;
 @RestController
 @Api(value="/generator",tags = "代码生成器接口")
 @RequestMapping("/generator")
-public class GeneratorController extends BaseController {
+public class GeneratorController {
 
     @Autowired
     private TableService tableService;
