@@ -5,10 +5,6 @@ import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
-import com.f00lish.xcloud.common.base.mapper.SuperMapper;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import java.io.Serializable;
 
 
 /**
@@ -25,26 +21,7 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${entity}>(), ${t
 
 }
 #else
-public class ${table.serviceImplName} extends ${superServiceImplClass}<SuperMapper<${entity}>,${entity}> implements ${table.serviceName} {
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
-    /*
-    @Override
-    @CacheEvict(value="otherCache",allEntries = true)
-    public boolean insert(${entity}VO entity) {
-        return super.insert(entity);
-    }
-
-    @Override
-    @CacheEvict(value="otherCache",allEntries = true)
-    public boolean updateById(${entity}VO entity) {
-        return super.updateById(entity);
-    }
-    **/
-
-    @Override
-    @CacheEvict(value="otherCache",allEntries = true)
-    public boolean deleteById(Serializable id) {
-        return super.deleteById(id);
-    }
 }
 #end

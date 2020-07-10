@@ -66,9 +66,9 @@ public class GenerateService {
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表
         // 自定义 service 父类
-        strategyConfig.setSuperServiceClass("com.f00lish.xcloud.common.base.service.SuperService");
+        strategyConfig.setSuperServiceClass("com.baomidou.mybatisplus.extension.service.IService");
         // 自定义 service 实现类父类
-        strategyConfig.setSuperServiceImplClass("com.f00lish.xcloud.common.base.service.impl.SuperServiceImpl");
+        strategyConfig.setSuperServiceImplClass("com.baomidou.mybatisplus.extension.service.impl.ServiceImpl");
         strategyConfig.setEntityLombokModel(true);
         strategyConfig.setRestControllerStyle(true);
         strategyConfig.setEntityBuilderModel(true);
@@ -104,7 +104,6 @@ public class GenerateService {
         }else{
             // 关闭默认 xml 生成，调整生成 至 根目录
             TemplateConfig templateConfig = new TemplateConfig();
-//            templateConfig.setXml(null);
             autoGenerator.setTemplate(templateConfig);
         }
 

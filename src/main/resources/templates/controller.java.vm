@@ -1,14 +1,13 @@
 package ${package.Controller};
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import io.swagger.annotations.Api;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.result.ResultMessage;
 import io.swagger.annotations.ApiOperation;
-import com.f00lish.xcloud.common.base.result.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
 import java.util.List;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
@@ -54,8 +53,8 @@ public class ${table.controllerName} {
     @GetMapping(value = "/list")
     @ApiOperation("${table.comment}列表")
     public ResultMessage<Page<${entity}>> list(${entity} ${table.entityPath}) {
-        Page page = this.getPagination();
-        return ResultMessage.success(${table.entityPath}Service.selectPage(page,new EntityWrapper<>(${table.entityPath})));
+        Page page = new Page(1,5);
+        return ResultMessage.success(${table.entityPath}Service.page(page, new QueryWrapper<>(${table.entityPath})));
     }
 
     /**
@@ -63,8 +62,8 @@ public class ${table.controllerName} {
     */
     @GetMapping(value = "/allList")
     @ApiOperation("所有${table.comment}列表")
-    public ResultMessage<List<${entity}>> allList(${entity} ${table.entityPath}) {
-        return ResultMessage.success(${table.entityPath}Service.selectList(new EntityWrapper<>(${table.entityPath})));
+    public ResultMessage<List<${entity}>> allList() {
+        return ResultMessage.success(${table.entityPath}Service.list());
     }
 
     /**
@@ -73,11 +72,12 @@ public class ${table.controllerName} {
     @PostMapping(value = "/add")
     @ApiOperation("新增${table.comment}")
     public ResultMessage<${entity}> add(@RequestBody ${entity} ${table.entityPath}) {
-        boolean result = ${table.entityPath}Service.insert(${table.entityPath});
-        if (result)
+        boolean result = ${table.entityPath}Service.save(${table.entityPath});
+        if (result){
             return ResultMessage.success(${table.entityPath});
-        return ResultMessage.error();
         }
+        return ResultMessage.error();
+    }
 
     /**
      * 删除${table.comment}
@@ -85,11 +85,12 @@ public class ${table.controllerName} {
     @DeleteMapping(value = "/del")
     @ApiOperation("删除${table.comment}")
     public ResultMessage<String> delById(@RequestParam("id") Long id) {
-        boolean result = ${table.entityPath}Service.deleteById(id);
-        if (result)
+        boolean result = ${table.entityPath}Service.removeById(id);
+        if (result){
             return ResultMessage.success();
-        return ResultMessage.error();
         }
+        return ResultMessage.error();
+    }
 
     /**
      * "批量删除${table.comment}"
@@ -98,7 +99,9 @@ public class ${table.controllerName} {
     @DeleteMapping(value = "/delete")
     @ApiOperation("批量删除${table.comment}")
     public ResultMessage<Object> delByIds(String ids) {
-        return this.deleteBatchIds(ids, ${table.entityPath}Service);
+        List idList = Arrays.asList(ids.split(","));
+        return ${table.entityPath}Service.removeByIds(idList) ? ResultMessage.success(ResultMessage.OK, "删除成功") :
+        ResultMessage.error(ResultMessage.FAIL, "删除失败");
     }
 
     /**
@@ -108,8 +111,9 @@ public class ${table.controllerName} {
     @ApiOperation("修改${table.comment}")
     public ResultMessage<String> update(@RequestBody ${entity} ${table.entityPath}) {
         boolean result = ${table.entityPath}Service.updateById(${table.entityPath});
-        if (result)
+        if (result){
             return ResultMessage.success();
+        }
         return ResultMessage.error();
     }
 
@@ -119,7 +123,7 @@ public class ${table.controllerName} {
     @GetMapping(value = "/get")
     @ApiOperation("查看${table.comment}")
     public ResultMessage<${entity}> get(@RequestParam("id") Long id) {
-        return ResultMessage.success(${table.entityPath}Service.selectById(id));
+        return ResultMessage.success(${table.entityPath}Service.getById(id));
     }
 
 }
