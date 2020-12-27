@@ -12,7 +12,8 @@
     <link rel="shortcut icon" href="asset/img/favicon.ico" media="screen"/>
 </head>
 <body ng-controller="AppCtrl">
-<toaster-cocolantainer toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-cocolantainer>
+<toaster-cocolantainer
+        toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-cocolantainer>
 <input id="uploadFile" type="file" multiple="multiple" class="hidden"
        onchange="angular.element(this).scope().onUploadFileChange()"/>
 <div class="app app-client" id="app">
@@ -21,8 +22,9 @@
             <div class="wrapper-sm inline">
                 <a href="#" class="text-lt">
 		          <span class="m-r-xs">
-                    <span class="app-name"><i class="fa fa-code"></i>
+                    <span class="app-name">
                         XCloud - 代码生成器</span>
+                  </span>
                 </a>
             </div>
         </div>
